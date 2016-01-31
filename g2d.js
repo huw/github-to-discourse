@@ -28,7 +28,7 @@ for (property of mandatory_webhook_props) {
 }
 
 var handler = require('github-webhook-handler')({
-    path: config.webhook.path,
+    path: "/" + config.webhook.path,
     secret: config.webhook.secret
 })
 
