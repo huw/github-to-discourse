@@ -1,0 +1,20 @@
+{
+  "name": "github-to-discourse",
+  "version": "1.0.0",
+  "description": "Forwards commit data from a GitHub webhook to a Discourse thread",
+  "author": "Huw <me@huw.nu>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/huw/github-to-discourse"
+  },
+  "preferGlobal": true,
+  "private": true,
+  "license": "MIT",
+  "dependencies": {
+    "github-webhook-handler": "^0.5.0",
+    "request": "^2.69.0"
+  },
+  "bin": {
+    "g2d": "g2d.js"
+  }
+}
