@@ -64,6 +64,8 @@ handler.on('push', function(event) {
 
         var comment_text = ""
         if (config.hasOwnProperty('onebox_enabled') && config.onebox_enabled) {
+            comment_text = commit.url
+        } else {
             commit = commit.message.split("\n")
             comment_text = "_latest changes on github:_\n\n---\n"
 
@@ -76,8 +78,6 @@ handler.on('push', function(event) {
                 "\n\n---\n_[more details at github](" +
                 commit.url + 
                 ") - this is an automated post_"
-        } else {
-            comment_text = commit.url
         }
 
         // MAKE THE COMMENT
