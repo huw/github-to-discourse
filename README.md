@@ -28,4 +28,4 @@ You can rename `config.json.0` or just copy this:
     }
 ```
 
-Edit the propeties as appropriate. Everything except `discourse.https_enabled`, `onebox_enabled` and `webhook.port` are mandatory.
+Edit the propeties as appropriate. Everything except `discourse.https_enabled`, `onebox_enabled` and `webhook.port` is mandatory.
