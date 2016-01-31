@@ -8,7 +8,6 @@
     "url": "https://github.com/huw/github-to-discourse"
   },
   "preferGlobal": true,
-  "private": true,
   "license": "MIT",
   "dependencies": {
     "github-webhook-handler": "^0.5.0",
