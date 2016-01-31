@@ -116,3 +116,7 @@ handler.on('push', function(event) {
 handler.on('ping', function(event) {
     console.log("Received ping: " + event.payload.zen)
 })
+
+handler.on('error', function(event) {
+    console.log(event)
+})
