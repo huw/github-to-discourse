@@ -106,7 +106,7 @@ handler.on('push', function(event) {
         }, function(err, res, body) {
             if (err) throw err
             var post_url = discourse_url + "/t/" + config.discourse.topic_id + 
-                "/" + res.body["post_number"]
+                "/" + JSON.parse(body).post_number
             console.log("Success: " + commit.id + " / " + post_url)
         })
     };
