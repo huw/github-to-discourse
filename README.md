@@ -6,6 +6,7 @@ It will forward any 'push' webhooks it receives to a specified thread on a [Disc
 
 # Install
 1. `npm install -g github-to-discourse`
+2. `cd \`npm root -g\`/github-to-discourse`
 2. `mv config.json.0 config.json` and edit properties (see below)
 3. `g2d`
 
