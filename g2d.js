@@ -47,7 +47,7 @@ http.createServer(function (req, res) {
 handler.on('push', function(event) {
 
     console.log("Received push from " + 
-        event.payload["respository"]["full_name"])
+        event.payload["repository"]["full_name"])
     var commits = event.payload.commits
 
     // Handle multiple commits in one webhook
