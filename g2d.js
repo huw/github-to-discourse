@@ -84,18 +84,15 @@ handler.on('push', function(event) {
         // we make a POST to your thread with details
         // about your commit.
 
+        var discourse_url = ((
+            config.discourse.hasOwnProperty('https_enabled') && 
+            config.discourse.https_enabled) 
+            ? "https://" 
+            : "http://"
+        ) + config.discourse.domain
+
         request({
-            url: 
-                (
-                    (
-                        config.discourse.hasOwnProperty('https_enabled') && 
-                        config.discourse.https_enabled
-                    ) 
-                    ? "https://" 
-                    : "http://"
-                ) +
-                config.discourse.domain +
-                "/posts",
+            url: discourse_url + "/posts",
             method: "POST",
             qs: {
                 'api_key': config.discourse.api_key,
@@ -107,8 +104,9 @@ handler.on('push', function(event) {
             }
         }, function(err, res, body) {
             if (err) throw err
-            console.log("Success: " + commit.id)
-            console.log(res)
+            var post_url = discourse_url + "/t/" + config.discourse.topic_id + 
+                "/" + res.body["post_number"]
+            console.log("Success: " + commit.id + " / " + post_url)
         })
     };
 })
