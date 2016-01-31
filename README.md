@@ -1,12 +1,13 @@
 # GitHub to Discourse
 [![npm](https://img.shields.io/npm/v/github-to-discourse.svg)](https://www.npmjs.com/package/github-to-discourse)
+
 This is very simple.
 
 It will forward any 'push' webhooks it receives to a specified thread on a [Discourse](https://discourse.org) forum. I couldn't find anything similar around, presumably because people don't really use Discourse to publish new commits. But hey, maybe there's a use-case somewhere.
 
 # Install
 1. `npm install -g github-to-discourse`
-2. `cd \`npm root -g\`/github-to-discourse`
+2. ``cd `npm root -g`/github-to-discourse``
 2. `mv config.json.0 config.json` and edit properties (see below)
 3. `g2d`
 
