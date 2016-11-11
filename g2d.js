@@ -4,7 +4,7 @@ var http    = require('http')
 var request = require('request')
 
 var config = JSON.parse(
-    fs.readFileSync('config.json')
+    fs.readFileSync(process.argv[2])
 );
 
 // Ensure all files in object
