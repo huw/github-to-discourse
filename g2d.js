@@ -107,6 +107,8 @@ function create_post(commit, comment_text) {
 
         console.log("Posting to Discourse: url=" + post_url + ", topic_id=" + config.discourse.topic_id + ", raw=" + comment_text)
         request({
+            sync: true,
+            async: false,
             url: post_url,
             method: "POST",
             qs: {
