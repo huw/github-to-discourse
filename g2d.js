@@ -53,6 +53,8 @@ handler.on('push', function(event) {
     // Handle multiple commits in one webhook
     for (var commit of commits) {
 
+        console.log("Processing commit '" + commit.id + "': " + commit.message)
+
         // BUILD THE MESSAGE
         // We put together the forum post in Markdown
         // by splitting the commit message and adding
@@ -80,6 +82,15 @@ handler.on('push', function(event) {
                 ") - this is an automated post_"
         }
 
+        create_post(commit, comment_text)
+
+    };
+})
+
+function create_post(commit, comment_text) {
+
+        // http://learndiscourse.org/discourse-api-documentation/#posts
+
         // MAKE THE COMMENT
         // Given the details you added to config.json
         // we make a POST to your thread with details
@@ -92,8 +103,11 @@ handler.on('push', function(event) {
             : "http://"
         ) + config.discourse.domain
 
+        var post_url = discourse_url + "/posts"
+
+        console.log("Posting to Discourse: url=" + post_url + ", topic_id=" + config.discourse.topic_id + ", raw=" + comment_text)
         request({
-            url: discourse_url + "/posts",
+            url: post_url,
             method: "POST",
             qs: {
                 'api_key': config.discourse.api_key,
@@ -105,12 +119,17 @@ handler.on('push', function(event) {
             }
         }, function(err, res, body) {
             if (err) throw err
-            var post_url = discourse_url + "/t/" + config.discourse.topic_id + 
-                "/" + JSON.parse(body).post_number
-            console.log("Success: " + commit.id + " / " + post_url)
+            var response = JSON.parse(body)
+            if (response.errors) {
+                console.error("Error posting commit '" + commit.id + "': " + response.errors)
+            } else {
+                var post_url = discourse_url + "/t/" + config.discourse.topic_id + 
+                    "/" + JSON.parse(body).post_number
+                console.log("Success: " + commit.id + " / " + post_url)
+            }
         })
-    };
-})
+
+}
 
 handler.on('ping', function(event) {
     console.log("Received ping: " + event.payload.zen)
