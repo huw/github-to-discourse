@@ -9,7 +9,9 @@ It will forward any 'push' webhooks it receives to a specified thread on a [Disc
 1. `npm install -g github-to-discourse`
 2. ``cd `npm root -g`/github-to-discourse``
 2. `mv config.json.0 config.json` and edit properties (see below)
-3. `g2d /path/to/config.json`
+3. `g2d`
+
+Note: You can also run `g2d /path/to/config.json` with a custom path, otherwise `config.json` will be used. 
 
 # Config.json Format
 _Note: All properties are required unless listed otherwise_

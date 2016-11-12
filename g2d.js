@@ -3,8 +3,15 @@ var fs      = require('fs');
 var http    = require('http')
 var request = require('request')
 
+var config_path;
+if (process.argv[2]) {
+  config_path = process.argv[2];
+} else {
+  config_path = 'config.json';
+}
+
 var config = JSON.parse(
-    fs.readFileSync(process.argv[2])
+    fs.readFileSync(config_path)
 );
 
 // Ensure all files in object
@@ -13,16 +20,16 @@ var mandatory_webhook_props = ["secret"]
 
 for (property of mandatory_discourse_props) {
     if (!config.discourse.hasOwnProperty(property)) {
-        throw new Error("Required property discourse." + 
-            property + 
+        throw new Error("Required property discourse." +
+            property +
             " not found in config.json")
     }
 }
 
 for (property of mandatory_webhook_props) {
     if (!config.webhook.hasOwnProperty(property)) {
-        throw new Error("Required property webhook." + 
-            property + 
+        throw new Error("Required property webhook." +
+            property +
             " not found in config.json")
     }
 }
@@ -40,13 +47,13 @@ http.createServer(function (req, res) {
         res.end('Not Found')
     })
 }).listen(port, function() {
-    console.log("Accepting webhooks to /" + config.webhook.path + " on port " 
+    console.log("Accepting webhooks to /" + config.webhook.path + " on port "
                 + port)
 })
 
 handler.on('push', function(event) {
 
-    console.log("Received push from " + 
+    console.log("Received push from " +
         event.payload["repository"]["full_name"])
     var commits = event.payload.commits
 
@@ -76,9 +83,9 @@ handler.on('push', function(event) {
                 comment_text += "> " + (x==0 ? "# " : "") + line + "\n"
             }
 
-            comment_text += 
+            comment_text +=
                 "\n\n---\n_[more details at github](" +
-                commit.url + 
+                commit.url +
                 ") - this is an automated post_"
         }
 
@@ -97,9 +104,9 @@ function create_post(commit, comment_text) {
         // about your commit.
 
         var discourse_url = ((
-            config.discourse.hasOwnProperty('https_enabled') && 
-            config.discourse.https_enabled) 
-            ? "https://" 
+            config.discourse.hasOwnProperty('https_enabled') &&
+            config.discourse.https_enabled)
+            ? "https://"
             : "http://"
         ) + config.discourse.domain
 
@@ -125,7 +132,7 @@ function create_post(commit, comment_text) {
             if (response.errors) {
                 console.error("Error posting commit '" + commit.id + "': " + response.errors)
             } else {
-                var post_url = discourse_url + "/t/" + config.discourse.topic_id + 
+                var post_url = discourse_url + "/t/" + config.discourse.topic_id +
                     "/" + JSON.parse(body).post_number
                 console.log("Success: " + commit.id + " / " + post_url)
             }
