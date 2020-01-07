@@ -118,9 +118,9 @@ function create_post(commit, comment_text) {
             async: false,
             url: post_url,
             method: "POST",
-            qs: {
-                'api_key': config.discourse.api_key,
-                'api_username': config.discourse.api_user
+            headers: {
+                'Api-Key': config.discourse.api_key,
+                'Api-Username': config.discourse.api_user
             },
             form: {
                 topic_id: config.discourse.topic_id,
