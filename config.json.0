@@ -7,6 +7,9 @@
         "topic_id": 0
     },
     "onebox_enabled": false,
+    "repository": {
+        "default_branch_only": true
+    },
     "webhook": {
         "path": "",
         "port": 8080,

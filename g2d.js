@@ -53,9 +53,22 @@ http.createServer(function (req, res) {
 
 handler.on('push', function(event) {
 
-    console.log("Received push from " +
-        event.payload["repository"]["full_name"])
+    // Extract some parameters from event payload.
+    var repository_name = event.payload["repository"]["full_name"]
+    var default_branch = event.payload["repository"]["default_branch"]
+    var target_ref = event.payload["ref"]
     var commits = event.payload.commits
+
+    console.log("Received push from " + repository_name)
+
+    // When configured, only process push events to the default branch.
+    if (config.repository && config.repository.default_branch_only) {
+        var default_branch_ref = "refs/heads/" + default_branch
+        if (target_ref != default_branch_ref) {
+            console.log("Ignoring push to non-default branch ref " + target_ref)
+            return
+        }
+    }
 
     // Handle multiple commits in one webhook
     for (var commit of commits) {
