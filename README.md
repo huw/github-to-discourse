@@ -28,6 +28,9 @@ Does the Discourse server use HTTPS? This is optional, defaults to `false`
 The topic that the program should be posting replies to. You can get this from the number at the end of your topic URL: For `https://meta.discourse.org/t/presence-features-for-forums/12` it's `12`.
 ## `onebox_enabled`
 Some Discourse installations enable a 'onebox' for GitHub commit links, which displays them in a fancy format with the title and message. If you'd like to use this, and your server supports it, you can set this to `true`. Otherwise it's optional, and defaults to false.
+## `repository`
+### `default_branch_only`
+Only processes commits to the default branch (configurable on GitHub). `false` by default.
 ## `webhook`
 ### `path`
 The path name on your server that GitHub is sending Webhooks to. Include no slashes, e.g. `push-to-here` if you're hooking to `http://myurl.com/push-to-here`.

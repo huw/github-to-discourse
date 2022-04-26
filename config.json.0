@@ -8,7 +8,7 @@
     },
     "onebox_enabled": false,
     "repository": {
-        "default_branch_only": true
+        "default_branch_only": false
     },
     "webhook": {
         "path": "",
