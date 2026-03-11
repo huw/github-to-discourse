@@ -1,8 +1,8 @@
 {
   "name": "github-to-discourse",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Forwards commit data from a GitHub webhook to a Discourse thread",
-  "author": "Huw <me@huw.nu>",
+  "author": "Huw <yo@huw.cool>",
   "repository": {
     "type": "git",
     "url": "https://github.com/huw/github-to-discourse"
