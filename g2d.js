@@ -71,8 +71,12 @@ handler.on('push', function(event) {
     }
 
     // Handle multiple commits in one webhook
-    for (var commit of commits) {
+    if (!commits || commits.length === 0) return
 
+    function processCommit(index) {
+        if (index >= commits.length) return
+
+        var commit = commits[index]
         console.log("Processing commit '" + commit.id + "': " + commit.message)
 
         // BUILD THE MESSAGE
@@ -102,12 +106,20 @@ handler.on('push', function(event) {
                 ") - this is an automated post_"
         }
 
-        create_post(commit, comment_text)
+        create_post(commits[index], comment_text, function(err) {
+            if (err) {
+                // Log error but continue with next commit
+                console.error("Failed to post commit " + commits[index].id + ": " + err.message)
+            }
+            processCommit(index + 1)
+        })
+    }
 
-    };
+    processCommit(0)
+
 })
 
-function create_post(commit, comment_text) {
+function create_post(commit, comment_text, callback) {
 
         // http://learndiscourse.org/discourse-api-documentation/#posts
 
@@ -144,10 +156,12 @@ function create_post(commit, comment_text) {
             var response = JSON.parse(body)
             if (response.errors) {
                 console.error("Error posting commit '" + commit.id + "': " + response.errors)
+                if (callback) callback(new Error(response.errors.join(', ')))
             } else {
                 var post_url = discourse_url + "/t/" + config.discourse.topic_id +
                     "/" + JSON.parse(body).post_number
                 console.log("Success: " + commit.id + " / " + post_url)
+                if (callback) callback()
             }
         })
 
