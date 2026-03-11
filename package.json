@@ -10,7 +10,7 @@
   "preferGlobal": true,
   "license": "MIT",
   "dependencies": {
-    "github-webhook-handler": "^0.5.0",
+    "github-webhook-handler": "^2.1.0",
     "request": "^2.69.0"
   },
   "bin": {
